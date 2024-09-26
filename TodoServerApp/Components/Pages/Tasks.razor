@@ -4,4 +4,40 @@
 
 <h1>Мои задачи</h1>
 
-Здесь будет список моих задач
+<table class="table" table-bordered>
+	<thead>
+		<tr>
+			<th>Айди</th>
+			<th>Заголовок</th>
+			<th>Описание</th>
+			<th>Создано</th>
+			<th>Заверешено</th>
+		</tr>
+	</thead>
+	
+	<tbody>
+		@foreach (var task in tasks)
+		{	
+			<tr>
+				<td>@task.Id</td>
+				<td>@task.Title</td>
+				<td>@task.Description</td>
+				<td>@task.CreatedDate</td>
+				<td>@task.FinishDate</td>
+			</tr>
+			
+		}
+	</tbody>
+
+</table>
+
+
+@code {
+	IEnumerable<TaskItem> tasks = new List<TaskItem>
+	{
+		new TaskItem {Id = 1, Title = "Задача 1", Description = "Описание", CreatedDate = DateTime.Now },
+		new TaskItem {Id = 1, Title = "Задача 2", Description = "Описание 2", CreatedDate = DateTime.Now },
+		new TaskItem {Id = 1, Title = "Задача 3", Description = "Описание 3", CreatedDate = DateTime.Now },
+
+	};
+}
