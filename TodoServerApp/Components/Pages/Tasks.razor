@@ -1,56 +1,63 @@
 ﻿@page "/"
 @rendermode InteractiveServer
 @inject IDataService data
+@inject NavigationManager navigate
 @attribute [Authorize]
 
 <PageTitle>Задачи</PageTitle>
 
 <h1>Мои задачи</h1>
 
-<table class="table" table-bordered>
-	<thead>
-		<tr>
-			<th>Айди</th>
-			<th>Заголовок</th>
-			<th>Описание</th>
-			<th>Создано</th>
-			<th>Заверешено</th>
-		</tr>
-	</thead>
-	
-	<tbody>
-		@if(tasks == null)
-		{
-			<tr>
-				<td colspan="5">Loading...</td>
-			</tr>
-		}
-		else
-		{
-			@foreach (var task in tasks)
-			{
-				<tr>
-					<td>@task.Id</td>
-					<td>@task.Title</td>
-					<td>@task.Description</td>
-					<td>@task.CreatedDate</td>
-					<td>@task.FinishDate</td>
-				</tr>
+<div class="container">
+    @if(tasks== null)
+    {
+        <tr>
+            <td colspan="5">Loading...</td>
+        </tr>
+    } else
+    {
+        <div class="btn-group m-2">
+            <button class="btn btn-primary" @onclick="AddTask">Новая задача</button>
+        </div>
+        <div class="card-group">
+            @foreach (var task in tasks)
+            {
+                <div class="card">
+                    <div class="card-header">
+                        @task.Title
+                    </div>
+                    <div class="card-body">
+                        <p>@task.CreatedDate</p>
+                        <p>@task.Description</p>
+                    </div>
+                    <div class="card-footer">
+                        <a class="btn btn-primary" href="tasks/@task.Id">Изменить</a>
+                         <button class="btn btn-primary" @onclick="async () => await DeleteTask(task.Id)"> Удалить</button>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
 
-			}
-		}
-	</tbody>
-
-</table>
 
 
 @code {
-	IEnumerable<TaskItem>? tasks;
+    IEnumerable<TaskItem>? tasks;
 
 	protected override async Task OnInitializedAsync()
 	{
 		await base.OnInitializedAsync();
-		tasks = await data.GetTaskItemsAsync();
+		tasks = await data.GetAllAsync();
 	}
+    void AddTask() {
+        navigate.NavigateTo("tasks/add");
+    }
+
+    async Task DeleteTask(int id)
+    {
+        await data.DeleteAsync(id);
+        tasks = await data.GetAllAsync();
+    }
 
 }
