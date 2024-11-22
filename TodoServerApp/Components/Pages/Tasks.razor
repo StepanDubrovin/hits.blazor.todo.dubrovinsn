@@ -27,12 +27,13 @@
                         @task.Title
                     </div>
                     <div class="card-body">
-                        <p>@task.CreatedDate</p>
-                        <p>@task.Description</p>
+                        <p><strong>Дата создания:</strong> @task.CreatedDate?.ToString("dd.MM.yyyy")</p>
+                        <p><strong>Описание:</strong> @task.Description</p>
+                        <p><strong>Приоритет:</strong> @task.Priority.Name (@task.Priority.Weight)</p>
                     </div>
                     <div class="card-footer">
                         <a class="btn btn-primary" href="tasks/@task.Id">Изменить</a>
-                         <button class="btn btn-primary" @onclick="async () => await DeleteTask(task.Id)"> Удалить</button>
+                        <button class="btn btn-danger" @onclick="async () => await DeleteTask(task.Id)">Удалить</button>
                     </div>
                 </div>
             }

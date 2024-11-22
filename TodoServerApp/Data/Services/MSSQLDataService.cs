@@ -7,7 +7,9 @@ namespace TodoServerApp.Data.Services
 	{
         public async Task<IEnumerable<TaskItem>> GetAllAsync()
         {
-            return await context.TaskItems.ToArrayAsync();
+            return await context.TaskItems
+            .Include(t => t.Priority) // Подключаем приоритет
+            .ToListAsync();
         }
         public async Task SaveAsync(TaskItem taskItem)
         {
@@ -24,7 +26,9 @@ namespace TodoServerApp.Data.Services
         }
         public async Task<TaskItem> GetTaskAsync(int id)
         {
-            return await context.TaskItems.FirstAsync(x => x.Id == id);
+           return await context.TaskItems
+                .Include(t => t.Priority) // Подключаем приоритет
+                .FirstOrDefaultAsync(x => x.Id == id); 
         }
         public async Task DeleteAsync(int id)
         {
@@ -37,5 +41,31 @@ namespace TodoServerApp.Data.Services
         {
             throw new NotImplementedException();
         }
+
+        public async Task<IEnumerable<Priority>> GetPrioritiesAsync()
+        {
+            return await context.Priorities.ToListAsync();
+        }
+
+        public async Task SavePriorityAsync(Priority priority)
+        {
+            if (priority.Id == 0)
+            {
+                await context.Priorities.AddAsync(priority);
+            }
+            else
+            {
+                context.Priorities.Update(priority);
+            }
+            await context.SaveChangesAsync();
+        }
+
+        public async Task DeletePriorityAsync(int id)
+        {
+            var priority = await context.Priorities.FirstAsync(x => x.Id == id);
+            context.Priorities.Remove(priority);
+            await context.SaveChangesAsync();
+        }
+
     }
 }

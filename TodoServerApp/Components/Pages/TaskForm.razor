@@ -29,6 +29,18 @@
             <ValidationMessage For="() => TaskItem.FinishDate" />
         </div>
 
+        <!-- Выпадающий список для приоритета -->
+        <div class="form-group d-flex justify-content-between m-2">
+            <label class="col-form-label col-3">Приоритет</label>
+            <InputSelect @bind-Value="TaskItem.PriorityId" Class="form-control">
+                @foreach (var priority in priorities)
+                {
+                    <option value="@priority.Id">@priority.Name</option>
+                }
+            </InputSelect>
+            <ValidationMessage For="() => TaskItem.PriorityId" />
+        </div>
+
         <div class="btn-group">
             <button class="btn btn-primary m-2" type="submit">Сохранить</button>
             <a class="btn btn-primary m-2" href="/">Отмена</a>
@@ -44,9 +56,14 @@
     [SupplyParameterFromForm]
     TaskItem TaskItem { get; set; } = new();
 
+    // Список приоритетов
+    IEnumerable<Priority> priorities = Enumerable.Empty<Priority>();
+
     protected override async Task OnInitializedAsync()
     {
+        priorities = await data.GetPrioritiesAsync(); // Загрузка приоритетов из справочника
         await base.OnInitializedAsync();
+
         if (TaskItem == null)
         {
             if (Id != 0)
@@ -56,6 +73,7 @@
                 TaskItem.Title = src.Title;
                 TaskItem.Description = src.Description;
                 TaskItem.FinishDate = src.FinishDate;
+                TaskItem.PriorityId = src.PriorityId; 
             }
         }
     }

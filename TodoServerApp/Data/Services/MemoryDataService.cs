@@ -7,11 +7,16 @@ namespace TodoServerApp.Data.Services
     {
         private static IEnumerable<TaskItem> Tasks { get; } = [
             new() {Id = 1, Title = "Задача 1", Description = "Описание", CreatedDate = DateTime.Now },
-            new() {Id = 1, Title = "Задача 2", Description = "Описание 2", CreatedDate = DateTime.Now },
-            new() {Id = 1, Title = "Задача 3", Description = "Описание 3", CreatedDate = DateTime.Now },
+            new() {Id = 2, Title = "Задача 2", Description = "Описание 2", CreatedDate = DateTime.Now },
+            new() {Id = 3, Title = "Задача 3", Description = "Описание 3", CreatedDate = DateTime.Now },
         ];
 
         public Task DeleteAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeletePriorityAsync(int id)
         {
             throw new NotImplementedException();
         }
@@ -22,6 +27,11 @@ namespace TodoServerApp.Data.Services
         }
 
         public Task<TaskItem> GetAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<Priority>> GetPrioritiesAsync()
         {
             throw new NotImplementedException();
         }
@@ -38,6 +48,11 @@ namespace TodoServerApp.Data.Services
         }
 
         public Task SaveAsync(TaskItem item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task SavePriorityAsync(Priority priority)
         {
             throw new NotImplementedException();
         }

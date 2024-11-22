@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TodoServerApp.Data;
 
@@ -11,9 +12,11 @@ using TodoServerApp.Data;
 namespace TodoServerApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241122142252_AddPriorityFix")]
+    partial class AddPriorityFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -297,7 +300,7 @@ namespace TodoServerApp.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2024, 11, 22, 14, 37, 16, 427, DateTimeKind.Utc).AddTicks(3387),
+                            CreatedDate = new DateTime(2024, 11, 22, 14, 22, 51, 524, DateTimeKind.Utc).AddTicks(3088),
                             Description = "Описание 1",
                             PriorityId = 1,
                             Title = "Задача 1"
@@ -305,7 +308,7 @@ namespace TodoServerApp.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2024, 11, 22, 14, 37, 16, 427, DateTimeKind.Utc).AddTicks(3391),
+                            CreatedDate = new DateTime(2024, 11, 22, 14, 22, 51, 524, DateTimeKind.Utc).AddTicks(3094),
                             Description = "Описание 2",
                             PriorityId = 2,
                             Title = "Задача 2"
@@ -313,7 +316,7 @@ namespace TodoServerApp.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2024, 11, 22, 14, 37, 16, 427, DateTimeKind.Utc).AddTicks(3393),
+                            CreatedDate = new DateTime(2024, 11, 22, 14, 22, 51, 524, DateTimeKind.Utc).AddTicks(3096),
                             Description = "Описание 3",
                             PriorityId = 3,
                             Title = "Задача 3"
